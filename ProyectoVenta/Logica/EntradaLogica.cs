@@ -206,6 +206,7 @@ namespace ProyectoVenta.Logica
                     query.AppendLine("NombreProveedor,CantidadProductos,MontoTotal from ENTRADA");
                     query.AppendLine("where NumeroDocumento = @pnumero");
 
+
                     SqlCommand cmd = new SqlCommand(query.ToString(), conexion);
                     cmd.Parameters.Add(new SqlParameter("@pnumero", numerodocumento));
                     cmd.CommandType = System.Data.CommandType.Text;
