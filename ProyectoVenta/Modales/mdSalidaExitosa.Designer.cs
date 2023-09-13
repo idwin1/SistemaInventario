@@ -46,9 +46,10 @@
             this.btnaceptar.IconColor = System.Drawing.Color.Black;
             this.btnaceptar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnaceptar.IconSize = 20;
-            this.btnaceptar.Location = new System.Drawing.Point(147, 79);
+            this.btnaceptar.Location = new System.Drawing.Point(194, 103);
+            this.btnaceptar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnaceptar.Name = "btnaceptar";
-            this.btnaceptar.Size = new System.Drawing.Size(83, 23);
+            this.btnaceptar.Size = new System.Drawing.Size(111, 28);
             this.btnaceptar.TabIndex = 71;
             this.btnaceptar.Text = "Aceptar";
             this.btnaceptar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -60,26 +61,29 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(64, 9);
+            this.label1.Location = new System.Drawing.Point(85, 11);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(103, 15);
+            this.label1.Size = new System.Drawing.Size(120, 18);
             this.label1.TabIndex = 72;
             this.label1.Text = "Salida registrada!";
             // 
             // txtnumerodocumento
             // 
-            this.txtnumerodocumento.Location = new System.Drawing.Point(67, 52);
+            this.txtnumerodocumento.Location = new System.Drawing.Point(89, 64);
+            this.txtnumerodocumento.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtnumerodocumento.Name = "txtnumerodocumento";
             this.txtnumerodocumento.ReadOnly = true;
-            this.txtnumerodocumento.Size = new System.Drawing.Size(163, 20);
+            this.txtnumerodocumento.Size = new System.Drawing.Size(216, 22);
             this.txtnumerodocumento.TabIndex = 73;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(64, 36);
+            this.label2.Location = new System.Drawing.Point(85, 44);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(166, 13);
+            this.label2.Size = new System.Drawing.Size(209, 16);
             this.label2.TabIndex = 74;
             this.label2.Text = "Numero de documento generado:";
             // 
@@ -90,19 +94,20 @@
             this.iconPictureBox1.IconChar = FontAwesome.Sharp.IconChar.InfoCircle;
             this.iconPictureBox1.IconColor = System.Drawing.SystemColors.Highlight;
             this.iconPictureBox1.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.iconPictureBox1.IconSize = 48;
-            this.iconPictureBox1.Location = new System.Drawing.Point(12, 26);
+            this.iconPictureBox1.IconSize = 57;
+            this.iconPictureBox1.Location = new System.Drawing.Point(16, 32);
+            this.iconPictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.iconPictureBox1.Name = "iconPictureBox1";
-            this.iconPictureBox1.Size = new System.Drawing.Size(46, 46);
+            this.iconPictureBox1.Size = new System.Drawing.Size(61, 57);
             this.iconPictureBox1.TabIndex = 75;
             this.iconPictureBox1.TabStop = false;
             // 
             // mdSalidaExitosa
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(244, 115);
+            this.ClientSize = new System.Drawing.Size(429, 171);
             this.ControlBox = false;
             this.Controls.Add(this.iconPictureBox1);
             this.Controls.Add(this.label2);
@@ -110,6 +115,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnaceptar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "mdSalidaExitosa";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = ".: Mensaje :.";
