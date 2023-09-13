@@ -137,7 +137,7 @@ namespace ProyectoVenta.Logica
                     objTransaccion = conexion.BeginTransaction();
                     StringBuilder query = new StringBuilder();
 
-                    query.AppendLine("CREATE TEMP TABLE _TEMP(id INTEGER);");
+                    query.AppendLine("CREATE TABLE #_TEMP(id INTEGER);");
                     query.AppendLine(string.Format("Insert into SALIDA(NumeroDocumento,FechaRegistro,UsuarioRegistro,DocumentoCliente,NombreCliente,CantidadProductos,MontoTotal) values('{0}','{1}','{2}','{3}','{4}',{5},'{6}');",
                         obj.NumeroDocumento,
                         obj.FechaRegistro,
@@ -147,12 +147,12 @@ namespace ProyectoVenta.Logica
                         obj.CantidadProductos,
                         obj.MontoTotal));
 
-                    query.AppendLine("INSERT INTO _TEMP (id) VALUES (last_insert_rowid());");
+                    query.AppendLine("INSERT INTO #_TEMP (id) VALUES (scope_identity());");
 
                     foreach (DetalleSalida de in obj.olistaDetalle)
                     {
                         query.AppendLine(string.Format("insert into DETALLE_SALIDA(IdSalida,IdProducto,CodigoProducto,DescripcionProducto,CategoriaProducto,AlmacenProducto,PrecioVenta,Cantidad,SubTotal) values({0},{1},'{2}','{3}','{4}','{5}','{6}',{7},'{8}');",
-                            "(select id from _TEMP)",
+                            "(select id from #_TEMP)",
                             de.IdProducto,
                             de.CodigoProducto,
                             de.DescripcionProducto,
@@ -165,7 +165,7 @@ namespace ProyectoVenta.Logica
 
                     }
 
-                    query.AppendLine("DROP TABLE _TEMP;");
+                    query.AppendLine("DROP TABLE #_TEMP;");
 
                     SqlCommand cmd = new SqlCommand(query.ToString(), conexion);
                     cmd.CommandType = System.Data.CommandType.Text;

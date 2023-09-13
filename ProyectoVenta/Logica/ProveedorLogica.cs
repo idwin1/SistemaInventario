@@ -112,7 +112,7 @@ namespace ProyectoVenta.Logica
                     StringBuilder query = new StringBuilder();
 
                     query.AppendLine("insert into PROVEEDOR(NumeroDocumento,NombreCompleto) values (@pnumero,@pnombre);");
-                    query.AppendLine("select last_insert_rowid();");
+                    query.AppendLine("select scope_identity();");
 
                     SqlCommand cmd = new SqlCommand(query.ToString(), conexion);
                     cmd.Parameters.Add(new SqlParameter("@pnumero", objeto.NumeroDocumento));

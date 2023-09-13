@@ -119,7 +119,7 @@ namespace ProyectoVenta.Logica
                     StringBuilder query = new StringBuilder();
 
                     query.AppendLine("insert into PRODUCTO(Codigo,Descripcion,Categoria,Almacen) values (@pcodigo,@pdescripcion,@pcategoria,@palmacen);");
-                    query.AppendLine("select last_insert_rowid();");
+                    query.AppendLine("select scope_identity();");
 
                     SqlCommand cmd = new SqlCommand(query.ToString(), conexion);
                     cmd.Parameters.Add(new SqlParameter("@pcodigo", objeto.Codigo));

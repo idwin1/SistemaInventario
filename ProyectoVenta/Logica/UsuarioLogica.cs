@@ -140,7 +140,7 @@ namespace ProyectoVenta.Logica
                     StringBuilder query = new StringBuilder();
 
                     query.AppendLine("insert into USUARIO(NombreCompleto,NombreUsuario,Clave,IdPermisos) values (@pnombrecompleto,@pnombreusuario,@pclave,@pidpermisos);");
-                    query.AppendLine("select last_insert_rowid();");
+                    query.AppendLine("select scope_identity();");
 
                     SqlCommand cmd = new SqlCommand(query.ToString(), conexion);
                     cmd.Parameters.Add(new SqlParameter("@pnombrecompleto", objeto.NombreCompleto));

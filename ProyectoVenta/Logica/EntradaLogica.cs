@@ -29,7 +29,7 @@ namespace ProyectoVenta.Logica
             }
         }
 
-
+        //este es el de master
         public int Existe(string numerodocumento, out string mensaje)
         {
             mensaje = string.Empty;
@@ -77,8 +77,8 @@ namespace ProyectoVenta.Logica
                     objTransaccion = conexion.BeginTransaction();
                     StringBuilder query = new StringBuilder();
 
-                    query.AppendLine("CREATE TEMP TABLE _TEMP(id INTEGER);");
-                    query.AppendLine(string.Format("Insert into ENTRADA(NumeroDocumento,FechaRegistro,UsuarioRegistro,DocumentoProveedor,NombreProveedor,CantidadProductos,MontoTotal) values('{0}','{1}','{2}','{3}','{4}',{5},'{6}');",
+                    query.AppendLine("CREATE TABLE #_TEMP(id INTEGER);");
+                    query.AppendLine(string.Format("Insert into ENTRADA(NumeroDocumento,FechaRegistro,UsuarioRegistro,DocumentoProveedor,NombreProveedor,CantidadProductos,MontoTotal) values('{0}','{1}','{2}','{3}','{4}','{5}','{6}');",
                         obj.NumeroDocumento,
                         obj.FechaRegistro,
                         obj.UsuarioRegistro,
@@ -87,12 +87,12 @@ namespace ProyectoVenta.Logica
                         obj.CantidadProductos,
                         obj.MontoTotal));
 
-                    query.AppendLine("INSERT INTO _TEMP (id) VALUES (last_insert_rowid());");
+                    query.AppendLine("INSERT INTO #_TEMP (id) VALUES (scope_identity());");
 
                     foreach (DetalleEntrada de in obj.olistaDetalle)
                     {
                         query.AppendLine(string.Format("insert into DETALLE_ENTRADA(IdEntrada,IdProducto,CodigoProducto,DescripcionProducto,CategoriaProducto,AlmacenProducto,PrecioCompra,PrecioVenta,Cantidad,SubTotal) values({0},{1},'{2}','{3}','{4}','{5}','{6}','{7}',{8},'{9}');",
-                            "(select id from _TEMP)",
+                            "(select id from #_TEMP)",
                             de.IdProducto,
                             de.CodigoProducto,
                             de.DescripcionProducto,
@@ -107,7 +107,7 @@ namespace ProyectoVenta.Logica
                         query.AppendLine(string.Format("UPDATE PRODUCTO set PrecioCompra = '{0}', PrecioVenta = '{1}', Stock = (Stock + {2}) where IdProducto = {3};",de.PrecioCompra,de.PrecioVenta,de.Cantidad,de.IdProducto));
                     }
 
-                    query.AppendLine("DROP TABLE _TEMP;");
+                    query.AppendLine("DROP TABLE #_TEMP;");
 
                     SqlCommand cmd = new SqlCommand(query.ToString(), conexion);
                     cmd.CommandType = System.Data.CommandType.Text;
