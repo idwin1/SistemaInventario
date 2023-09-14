@@ -93,6 +93,7 @@ namespace ProyectoVenta.Formularios.Entradas
                 return;
             }
 
+
             string Texto_Html = string.Empty;
             if (chkocultarprecios.Checked)
             {
