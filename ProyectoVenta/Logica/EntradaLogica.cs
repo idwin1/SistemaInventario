@@ -1,11 +1,13 @@
-﻿using ProyectoVenta.Modelo;
+﻿using NPOI.SS.Formula.Functions;
+using ProyectoVenta.Intermedios;
+using ProyectoVenta.Modelo;
 using System;
 using System.Collections.Generic;
-using System.Data.Sql;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static ClosedXML.Excel.XLPredefinedFormat;
 
 namespace ProyectoVenta.Logica
 {
@@ -145,14 +147,15 @@ namespace ProyectoVenta.Logica
                 {
                     conexion.Open();
                     StringBuilder query = new StringBuilder();
-
-                    query.AppendLine("select e.NumeroDocumento,strftime('%d/%m/%Y', date(e.FechaRegistro))[FechaRegistro],e.UsuarioRegistro,");
-                    query.AppendLine("e.DocumentoProveedor,e.NombreProveedor,e.MontoTotal,");
-                    query.AppendLine("de.CodigoProducto,de.DescripcionProducto,de.CategoriaProducto,de.AlmacenProducto,de.PrecioCompra,");
-                    query.AppendLine("de.PrecioVenta,de.Cantidad,de.SubTotal");
+                    query.AppendLine("select e.NumeroDocumento, FORMAT((SELECT CAST(CAST(FechaRegistro AS varchar(20)) AS datetime)), 'dd/MM/yyyy') AS FechaRegistro, e.UsuarioRegistro,");
+                    query.AppendLine("e.DocumentoProveedor, e.NombreProveedor, e.MontoTotal,");
+                    query.AppendLine("de.CodigoProducto, de.DescripcionProducto, de.CategoriaProducto, de.AlmacenProducto, de.PrecioCompra,");
+                    query.AppendLine("de.PrecioVenta, de.Cantidad, de.SubTotal"); 
                     query.AppendLine("from ENTRADA e");
                     query.AppendLine("inner join DETALLE_ENTRADA de on e.IdEntrada = de.IdEntrada");
-                    query.AppendLine("where DATE(e.FechaRegistro) BETWEEN DATE(@pfechainicio) AND DATE(@pfechafin)");
+                    query.AppendLine("WHERE (SELECT CAST(CAST(FechaRegistro AS varchar(20)) AS datetime)) BETWEEN CAST(@pfechainicio AS DATETIME) AND CAST(@pfechafin AS DATETIME)");
+
+
 
                     SqlCommand cmd = new SqlCommand(query.ToString(), conexion);
                     cmd.Parameters.Add(new SqlParameter("@pfechainicio", fechainicio));
@@ -202,9 +205,9 @@ namespace ProyectoVenta.Logica
                 {
                     conexion.Open();
                     StringBuilder query = new StringBuilder();
-                    query.AppendLine("select IdEntrada,NumeroDocumento, strftime('%d/%m/%Y', date(FechaRegistro))[FechaRegistro],UsuarioRegistro,DocumentoProveedor,");
+                    query.AppendLine("select IdEntrada,NumeroDocumento, FORMAT((SELECT CAST(CAST(FechaRegistro AS varchar(20)) AS datetime)), 'dd/MM/yyyy') AS FechaRegistro,UsuarioRegistro,DocumentoProveedor,");
                     query.AppendLine("NombreProveedor,CantidadProductos,MontoTotal from ENTRADA");
-                    query.AppendLine("where NumeroDocumento = @pnumero");
+                    query.AppendLine("where CONVERT(VARCHAR, NumeroDocumento) = @pnumero");
 
                     SqlCommand cmd = new SqlCommand(query.ToString(), conexion);
                     cmd.Parameters.Add(new SqlParameter("@pnumero", numerodocumento));
