@@ -204,13 +204,13 @@ namespace ProyectoVenta.Logica
                     conexion.Open();
                     StringBuilder query = new StringBuilder();
                
-                    query.AppendLine("select e.NumeroDocumento,strftime('%d/%m/%Y', date(e.FechaRegistro))[FechaRegistro],e.UsuarioRegistro,");
+                    query.AppendLine("select e.NumeroDocumento,FORMAT((SELECT CAST(CAST(FechaRegistro AS varchar(20)) AS datetime)), 'dd/MM/yyyy') AS FechaRegistro,e.UsuarioRegistro,");
                     query.AppendLine("e.DocumentoCliente,e.NombreCliente,e.MontoTotal,");
                     query.AppendLine("de.CodigoProducto,de.DescripcionProducto,de.CategoriaProducto,de.AlmacenProducto,");
                     query.AppendLine("de.PrecioVenta,de.Cantidad,de.SubTotal");
                     query.AppendLine("from SALIDA e");
                     query.AppendLine("inner join DETALLE_SALIDA de on e.IdSalida = de.IdSalida");
-                    query.AppendLine("where DATE(e.FechaRegistro) BETWEEN DATE(@pfechainicio) AND DATE(@pfechafin)");
+                    query.AppendLine("where (SELECT CAST(CAST(FechaRegistro AS varchar(20)) AS datetime)) BETWEEN CAST(@pfechainicio AS DATETIME) AND CAST(@pfechafin AS DATETIME)");
 
                     SqlCommand cmd = new SqlCommand(query.ToString(), conexion);
                     cmd.Parameters.Add(new SqlParameter("@pfechainicio", fechainicio));
@@ -259,9 +259,9 @@ namespace ProyectoVenta.Logica
                 {
                     conexion.Open();
                     StringBuilder query = new StringBuilder();
-                    query.AppendLine("select IdSalida,NumeroDocumento, strftime('%d/%m/%Y', date(FechaRegistro))[FechaRegistro],UsuarioRegistro,DocumentoCliente,");
+                    query.AppendLine("select IdSalida,NumeroDocumento, FORMAT((SELECT CAST(CAST(FechaRegistro AS varchar(20)) AS datetime)), 'dd/MM/yyyy') AS FechaRegistro,UsuarioRegistro,DocumentoCliente,");
                     query.AppendLine("NombreCliente,CantidadProductos,MontoTotal from SALIDA");
-                    query.AppendLine("where NumeroDocumento = @pnumero");
+                    query.AppendLine("where CONVERT(VARCHAR, NumeroDocumento) = @pnumero");
 
                     SqlCommand cmd = new SqlCommand(query.ToString(), conexion);
                     cmd.Parameters.Add(new SqlParameter("@pnumero", numerodocumento));
